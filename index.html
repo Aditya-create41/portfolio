@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aditya | Portfolio</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="animated-bg"></div>
+  
+  <header>
+    <h1>Aditya's Portfolio</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  
+
+  <section id="about">
+  <h2>👋 About Me</h2>
+  <div class="about-container">
+    <img src="profile.jpg" alt="My Profile Photo" class="profile-photo">
+    <p>I’m Aditya, a beginner-friendly web developer passionate about building fun, creative websites using HTML, CSS, and JavaScript. This is my interactive portfolio!</p>
+  </div>
+</section>
+
+
+  <section id="experience">
+    <h2>💼 Experience</h2>
+    <ul>
+      <li><strong>Intern - Web Developer</strong>, ABC Web Studio (2024)<br>Built landing pages and worked on responsive design.</li>
+      <li><strong>Freelancer</strong>, Personal Clients (2023)<br>Created basic business sites for local shops and cafes.</li>
+    </ul>
+  </section>
+
+  <section id="projects">
+    <h2>💻 Projects</h2>
+    <div class="project">
+      <h3>Weather App</h3>
+      <p>A simple weather app using HTML, CSS & JavaScript fetching live weather API data.</p>
+    </div>
+    <div class="project">
+      <h3>To-Do List</h3>
+      <p>Interactive to-do list with local storage. Built using HTML, CSS, JS only.</p>
+    </div>
+    <div class="project">
+      <h3>Personal Blog</h3>
+      <p>Static blog site with multiple pages styled using pure CSS and responsive grid layout.</p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>🛠 Skills</h2>
+    <div class="skills-grid">
+      <span>HTML5</span>
+      <span>CSS3</span>
+      <span>JavaScript</span>
+      <span>Git & GitHub</span>
+      <span>Responsive Design</span>
+      <span>Figma (UI Design)</span>
+    </div>
+  </section>
+
+  <!--  CHAT SECTION  -->
+<section id="contact">
+  <h2>🤖 Chat with Me</h2>
+
+  <div class="chat-container">
+    <div class="chat-box" id="chat-box">
+      <div class="bot-message">Hi there! 👋 I'm your personal assistant. Ask me anything!</div>
+    </div>
+
+    <form id="chat-form">
+      <input type="text" id="user-input"
+             placeholder="Type your message..." autocomplete="off" required />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+</section>
+
+<!--  PLACE THIS JUST BEFORE THE CLOSING </body> TAG  -->
+<script defer>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    const chatForm = document.getElementById("chat-form");
+    const chatBox  = document.getElementById("chat-box");
+
+    const botReplies = [
+      { keyword: ["hello","hi"],           reply: "Hey there! 👋 How can I help you?" },
+      { keyword: ["project","projects"],   reply: "Check out my Weather App, Blog, and To‑Do List!" },
+      { keyword: ["contact","email"],      reply: "You can email me at aditya@example.com 📧" },
+      { keyword: ["skills"],               reply: "HTML, CSS, JS, UI Design 🎨" },
+      { keyword: ["bye"],                  reply: "Goodbye! 👋 Have a great day!" }
+    ];
+
+    chatForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const input = document.getElementById("user-input").value.trim();
+      if (!input) return;
+
+      appendMessage("user", input);
+      showTyping();
+
+      setTimeout(() => {
+        removeTyping();
+        const reply = getBotReply(input);
+        appendMessage("bot", reply);
+      }, 800);
+
+      chatForm.reset();
+    });
+
+    function getBotReply(text) {
+      const lower = text.toLowerCase();
+      const found = botReplies.find(r => r.keyword.some(k => lower.includes(k)));
+      return found ? found.reply : "Hmm… I’m not sure how to respond to that 🤖";
+    }
+
+    function appendMessage(sender, text) {
+      const div = document.createElement("div");
+      div.className = sender === "bot" ? "bot-message" : "user-message";
+      div.textContent = text;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function showTyping() {
+      const typing = document.createElement("div");
+      typing.id = "typing";
+      typing.className = "typing";
+      typing.textContent = "Typing…";
+      chatBox.appendChild(typing);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function removeTyping() {
+      const typing = document.getElementById("typing");
+      if (typing) typing.remove();
+    }
+
+  });
+</script>
+
+
+  <footer>
+    <p>© 2025 Aditya. Built with love & neon ✨</p>
+  </footer>
+  <script>
+  const chatForm = document.getElementById("chat-form");
+  const chatBox = document.getElementById("chat-box");
+
+  const botReplies = {
+    "hello": "Hey! 👋 How can I help you?",
+    "hi": "Hi there! 👋",
+    "how are you": "I'm doing great! How about you?",
+    "projects": "I’ve worked on a weather app, to-do list, and personal blog!",
+    "contact": "You can email me at aditya@example.com 📧",
+    "bye": "Goodbye! 👋 Have a great day!"
+  };
+
+  chatForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const userInput = document.getElementById("user-input").value.trim();
+    if (!userInput) return;
+
+    appendMessage("user", userInput);
+
+    const lowerInput = userInput.toLowerCase();
+    const botResponse = botReplies[lowerInput] || "Sorry, I didn’t understand that 🤖";
+
+    setTimeout(() => {
+      appendMessage("bot", botResponse);
+    }, 600);
+
+    chatForm.reset();
+  });
+
+  function appendMessage(sender, text) {
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add(sender === "bot" ? "bot-message" : "user-message");
+    messageDiv.textContent = text;
+    chatBox.appendChild(messageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+</script>
+
+
+
+</body>
+</html>
